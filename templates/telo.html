@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AppSupp Tooley</title>
+    <link href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEA
+    AAAAAAB6ir8APEuMAFNklwB5jMUAe47CAKy51QBoe64AfZC/AGt8qACFkrMAb3yoAICRwgCAksUA
+    aXq9AFlumgBdbZcA/P7/AMzV6QBhbZcAW2+mAHCDvQCisM0Ac4W6AFJdgwByhr0AbnSIAH6KpQB4
+    isAAe4y9AGZ6rAB/kLcAmqnLALa90ABdaKQAhZbJAFxxpABKVpwAh5zJADlHeQBibqQAhYiXAH+H
+    pgB9h68AeIvEAGh4pwCpttcAb3mYAFFlnACIj6MAb3ahAK651wB/isoAfZTEAHJ7pwCAlMQAbH22
+    AIKUxACaqs8AXWmfAGFunAB5h6cATlyLAH+JpABjdKUAYnWoAGBysQCmtNIAZHarAA8QKQBUZJEA
+    LjtpAEBQgwBqeKgAfZC5AHZ5kACDlsIAcYCuAG9/tACoqrUAam6CAFxurwAlMmoAY3KgAGB1qQCO
+    oMUAcXaIAI6iywBsdaAAkKLLAHyLvQBqdakAanqmAFZllQCtuNYAVWiVAJOmzgCSp9EAi5KlAGh+
+    sgBrergAa3y1AEJWjQBIWYQAbX++AFxtpABvgMEAcIK+ADxFdgBeb6oAYm+hAHGFvgBhbKoAXnCt
+    AHSDwQCQnb0AdoW+AHqItQBocacAT2CZAE9cnwCZobcAUWGcAKu41wBVZJwAlKXMALG80QBxfKQA
+    QVOOAJupxgCaps8AmKnPAFxsmQBcZqIAMkB6AF9rlgCfrMYAbYC5AF5smQBdbZwAtsHXAJ6szwBb
+    bqgAcYG8AKWxwwBOWZcAdIm5ADY3RQBNW50ApLTVAHyPwgA+UowAk6bQAH2RyABoe70AVWmjAFVu
+    oABsfLcAV2mjAF1ulwBaaqYAZ26FAFtsowBzf7cA/f//AP7//wBugsAA////AHWAugBMXI8AdIS9
+    AEpelQBkcqMAY3OmAExfmAB0hMYAPkx7AGd1owBOX6EAVWOSAG13oAB6j8MAIypNAH6VwwBaapUA
+    f5PGAGp8uABIVYQAgZbGAHGBrACElMkAXWenAISayQB6g6kATVqTAF5wsABgdqcAOU6CAGJ3qgCr
+    uMgAZHmwAGZ6qgBqeacAfJLEAFlpkwBtfaoAMUF3ADRDdACHl8EAhZbHAHOErQBvg7wAjpq4AHKD
+    vABcb64AiZrKAHKDxQBmcpwAUF6OAG11kwCDiqQAZnWlAGl0ogAAAAAAAAAAAAAAAAAAAAAAAAAA
+    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    AAAApqamEMaM1s90WqwuoBlVKKampH2LOBWAHsBbVzBPYU6mpqNdCQxnoiEkOqE+SoPbpqYFtocL
+    ChEgj0YCPMxeiqaml7QlaymQAUe1RNPHXDumpl8YQh9zqWNs2HgPE1KGpqZWFIhZgUyvFxJ7rZ2y
+    2aamfHFBaTmnbatRk7mf3bempoKYK5wzDW93hY6IcEizpqZYA2qZvde+J7E31Y0jMaamv9KaZNSu
+    hH9Nqs0vm7ympmAHyHZ5pXVl3MG6PajLpqYyS9qSlm5QxM5mJg7L0aamekmRQ1PKwh1FGp6JfrCm
+    ppRUcggABJUcYkDJaD81pqYtNjTQIri7GxYGw8UsKgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=" rel="icon" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='stylee.css')}}">
+    <script methon="post">
+        var checkedValues = "";
+
+        function updateCheckedValues() {
+            checkedValues = [];
+            var checkboxes = document.getElementsByName('selection');
+            for(var i = 0; i < checkboxes.length; i++) {
+                if(checkboxes[i].checked) {
+                    checkedValues.push(checkboxes[i].value);
+                }
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/update_checked_values");
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify({ checkedValues: checkedValues }));
+            console.log(checkedValues);
+        }
+
+        function selectAll() {
+        var checkboxes = document.getElementsByName("selection");
+        var selectAllButton = document.getElementById("select_all_btn");
+        var allChecked = true;
+        for(var i = 0; i < checkboxes.length; i++) {
+          if(!checkboxes[i].checked) {
+            allChecked = false;
+          }
+        }
+        if(allChecked) {
+          for(var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = false;
+          }
+          selectAllButton.value = "Select All";
+        } else {
+          for(var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = true;
+          }
+          selectAllButton.value = "Unselect All";
+        }
+        updateCheckedValues();
+      }     
+    </script>
+</head>
+<body>
+    <aside>
+        <p>   </p>
+        <a href="/">
+          <i class="fa fa-laptop" aria-hidden="true"></i>
+          PPC's
+        </a>
+    </aside>
+
+
+    <div class="container">
+        <h1>PPC's List</h1>
+        <div>
+            <form method="post">
+                <input type="button" class="sel_btn" id="select_all_btn" value="Select All" onclick="selectAll()"/>
+                <button type="submit" name="stop_btn1" class="btn1">Stop</button>
+                <button type="submit" name="restart_btn2" class="btn2">Restart</button>
+            </form>
+        </div>
+        <ul class="item-list">
+        {% for item in items %}
+        <form>
+         <li class="item" method="post">
+          <label class=".lbl_checkbox">
+          <input value="{{ item.id }}" type="checkbox" name="selection" id="{{ item.id }}" onclick="updateCheckedValues()">
+          <label>{{ item.label }}</label>
+          </label>
+         </li>
+        </form>
+        {% endfor %}
+        </ul>
+       </div>
+</body>
+</html>
