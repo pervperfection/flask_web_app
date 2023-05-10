@@ -106,10 +106,6 @@ def meme_get():
     meme_pic,subreddit = meme()
     return render_template("meme.html", meme_pic=meme_pic, subreddit=subreddit)
 
-@app.route('/test')
-def web_vnc():
-    return render_template("test.html")
-
 
 if __name__ == '__main__':
-    app.run(debug=False, host="0.0.0.0")
+    app.run(debug=True, host="0.0.0.0")
