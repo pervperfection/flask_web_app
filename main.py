@@ -9,7 +9,7 @@ import json
 import pynetbox
 import paramiko
 
-load_dotenv() 
+load_dotenv()
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -33,7 +33,6 @@ def restart(host):
     print(_stdout.read().decode())
     client.close
     return host
-
 # Stop function  
 def stop(host):
 
