@@ -69,6 +69,50 @@ def get_ppcs_list():
     print('API Load Time\nElapsed: %.3f seconds' % (time.time() - t))
     return device_list
 
+@cache.cached(timeout=60)
+def get_ppcs_list_ro():
+    t = time.time()
+    device_dict = {'label': '', 'name': '', 'id': ''}
+    device_list = []
+    nb = pynetbox.api(
+        'https://netbox.onairent.live',
+        token= os.getenv('NETBOX_TOKEN')
+    )
+    # Define tags and netbox filter properties
+    devices = nb.dcim.devices.filter(tag='prod_ppc', site='ro01',status='active')
+
+    for device in devices:
+        new_device_dict = device_dict.copy()
+        new_device_dict['label'] = device.name
+        new_device_dict['name'] = device.name + '.int.onairent.live'
+        new_device_dict['id'] = device.name + '.int.onairent.live'
+        device_list.append(new_device_dict)
+        device_dict.clear()
+    print('API Load Time\nElapsed: %.3f seconds' % (time.time() - t))
+    return device_list
+
+@cache.cached(timeout=60)
+def get_ppcs_list_ge():
+    t = time.time()
+    device_dict = {'label': '', 'name': '', 'id': ''}
+    device_list = []
+    nb = pynetbox.api(
+        'https://netbox.onairent.live',
+        token= os.getenv('NETBOX_TOKEN')
+    )
+    # Define tags and netbox filter properties
+    devices = nb.dcim.devices.filter(tag='prod_ppc', site='ge01',status='active')
+
+    for device in devices:
+        new_device_dict = device_dict.copy()
+        new_device_dict['label'] = device.name
+        new_device_dict['name'] = device.name + '.int.onairent.live'
+        new_device_dict['id'] = device.name + '.int.onairent.live'
+        device_list.append(new_device_dict)
+        device_dict.clear()
+    print('API Load Time\nElapsed: %.3f seconds' % (time.time() - t))
+    return device_list
+
 def meme():
     url = "https://meme-api.com/gimme"
     nsfw = True
@@ -98,6 +142,39 @@ def index():
             stop(value)
     print('Page load time\nElapsed: %.3f seconds' % (time.time() - start))
     return render_template('telo.html', items=items)
+
+@app.route('/ro', methods=["POST", "GET"], endpoint='get_ppc_list_ro')
+def index():
+    start = time.time()
+    items = get_ppcs_list_ro()
+    if "restart_btn2" in request.form:
+        for value in checked_values: #list of strings
+            print("restarting - {}".format(value))
+            restart(value)
+            
+    if 'stop_btn1' in request.form:
+        for value in checked_values: #list of strings
+            print("restarting - {}".format(value))
+            stop(value)
+    print('Page load time\nElapsed: %.3f seconds' % (time.time() - start))
+    return render_template('ro.html', items=items)
+
+
+@app.route('/ge', methods=["POST", "GET"], endpoint='get_ppc_list_ge')
+def index():
+    start = time.time()
+    items = get_ppcs_list_ge()
+    if "restart_btn2" in request.form:
+        for value in checked_values: #list of strings
+            print("restarting - {}".format(value))
+            restart(value)
+            
+    if 'stop_btn1' in request.form:
+        for value in checked_values: #list of strings
+            print("restarting - {}".format(value))
+            stop(value)
+    print('Page load time\nElapsed: %.3f seconds' % (time.time() - start))
+    return render_template('ro.html', items=items)
     
 
 @app.route('/meme')
