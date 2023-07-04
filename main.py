@@ -41,7 +41,7 @@ def stop(host):
     policy = paramiko.AutoAddPolicy()
     client.set_missing_host_key_policy(policy)
     client.connect(host, username=special_account, password=os.getenv('PPC_PASSWORD'))
-    _stdin,_stdout,_stderr = client.exec_command("systemctl --user stop onair-electron") # Command to execute
+    _stdin,_stdout,_stderr = client.exec_command("--user stop onair-electron") # Command to execute 
     print(_stdout.read().decode())
     client.close
     return host
@@ -174,7 +174,7 @@ def index():
             print("restarting - {}".format(value))
             stop(value)
     print('Page load time\nElapsed: %.3f seconds' % (time.time() - start))
-    return render_template('ro.html', items=items)
+    return render_template('ge.html', items=items)
     
 
 @app.route('/meme')
