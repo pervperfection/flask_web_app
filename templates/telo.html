@@ -33,14 +33,6 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.112.5">
-        
-      <!-- Favicons -->
-    <link rel="apple-touch-icon" href="/docs/5.3/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-    <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-    <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-    <link rel="manifest" href="/docs/5.3/assets/img/favicons/manifest.json">
-    <link rel="mask-icon" href="/docs/5.3/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
-    <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon.ico">
     <meta name="theme-color" content="#3f05b0">
     <style>
         .bd-placeholder-img {
@@ -254,7 +246,7 @@
         <hr>
       </div>
       <div class="b-example-divider b-example-vr"></div>
-      <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 700px;">
+      <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 800px;">
         <a class="d-flex align-items-center flex-shrink-0 p-3 link-body-emphasis text-decoration-none border-bottom">
           <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
           <span class="fs-5 fw-semibold">PPC's List</span>
@@ -266,20 +258,22 @@
             </form>
         </div>
         </a>
-        <div class="list-group list-group-flush border-bottom scrollarea">
-          {% for item in items %}
-            <form>
-              <label class=".lbl_checkbox">
-              <a class="list-group-item list-group-item-action py-3 lh-sm" method="post" style="width: 700px;">
-                <div class="d-flex w-100 align-items-center justify-content-between">
-                  <strong class="mb-1">{{item.label}}</strong>
-                  <input  value="{{ item.id }}" type="checkbox" class="chkbox chkbox-warning" name="selection" id="{{ item.id }}" onclick="updateCheckedValues()">
-                </div>
-                <div class="col-10 mb-1 small">I could become something else, but i am a sign.</div>
-              </a>
-              </label>
-            </form>
-            {% endfor %}
+        <div class="list-group list-group-flush">
+          <div class="overflow-auto" style="max-width: 803px; max-height: 93vh;">
+              {% for item in items %}
+              <form>
+                <label class=".lbl_checkbox">
+                <a class="list-group-item list-group-item-action py-3 lh-sm" method="post" style="width: 783px;">
+                  <div class="d-flex w-100 align-items-center justify-content-between">
+                    <strong class="mb-1">{{item.label}}</strong>
+                    <input  value="{{ item.id }}" type="checkbox" class="chkbox chkbox-warning" name="selection" id="{{ item.id }}" onclick="updateCheckedValues()">
+                  </div>
+                  <div class="col-10 mb-1 small">I could become something else, but i am a sign.</div>
+                </a>
+                </label>
+              </form>
+              {% endfor %}
+            </div>
         </div>
       </div>
       <div class="b-example-divider b-example-vr"></div>
