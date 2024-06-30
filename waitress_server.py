@@ -4,7 +4,7 @@ import logging
 
 
 def serving():
-    serve(main.app, host='10.8.8.106', port=8080)
+    serve(main.app, host='address', port=8080)
     logger = logging.getLogger('waitress')
     logger.setLevel(logging.INFO) 
 
