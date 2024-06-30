@@ -29,7 +29,7 @@ def restart(host):
     policy = paramiko.AutoAddPolicy()
     client.set_missing_host_key_policy(policy)
     client.connect(host, username=special_account, password=os.getenv('PPC_PASSWORD'))
-    _stdin,_stdout,_stderr = client.exec_command("systemctl --user restart onair-electron") # Command to execute
+    _stdin,_stdout,_stderr = client.exec_command("systemctl --user restart 'service_name'") # Command to execute
     print(_stdout.read().decode())
     client.close
     return host
@@ -41,7 +41,7 @@ def stop(host):
     policy = paramiko.AutoAddPolicy()
     client.set_missing_host_key_policy(policy)
     client.connect(host, username=special_account, password=os.getenv('PPC_PASSWORD'))
-    _stdin,_stdout,_stderr = client.exec_command("--user stop onair-electron") # Command to execute 
+    _stdin,_stdout,_stderr = client.exec_command("--user stop 'service_name'") # Command to execute 
     print(_stdout.read().decode())
     client.close
     return host
@@ -53,7 +53,7 @@ def get_ppcs_list():
     device_dict = {'label': '', 'name': '', 'id': ''}
     device_list = []
     nb = pynetbox.api(
-        'https://netbox.onairent.live',
+        'netbox_url',
         token= os.getenv('NETBOX_TOKEN')
     )
     # Define tags and netbox filter properties
@@ -62,8 +62,8 @@ def get_ppcs_list():
     for device in devices:
         new_device_dict = device_dict.copy()
         new_device_dict['label'] = device.name
-        new_device_dict['name'] = device.name + '.int.onairent.live'
-        new_device_dict['id'] = device.name + '.int.onairent.live'
+        new_device_dict['name'] = device.name + '.address'
+        new_device_dict['id'] = device.name + '.address'
         device_list.append(new_device_dict)
         device_dict.clear()
     print('API Load Time\nElapsed: %.3f seconds' % (time.time() - t))
@@ -75,7 +75,7 @@ def get_ppcs_list_ro():
     device_dict = {'label': '', 'name': '', 'id': ''}
     device_list = []
     nb = pynetbox.api(
-        'https://netbox.onairent.live',
+        'netbox_url',
         token= os.getenv('NETBOX_TOKEN')
     )
     # Define tags and netbox filter properties
@@ -84,8 +84,8 @@ def get_ppcs_list_ro():
     for device in devices:
         new_device_dict = device_dict.copy()
         new_device_dict['label'] = device.name
-        new_device_dict['name'] = device.name + '.int.onairent.live'
-        new_device_dict['id'] = device.name + '.int.onairent.live'
+        new_device_dict['name'] = device.name + '.address'
+        new_device_dict['id'] = device.name + '.address'
         device_list.append(new_device_dict)
         device_dict.clear()
     print('API Load Time\nElapsed: %.3f seconds' % (time.time() - t))
@@ -97,7 +97,7 @@ def get_ppcs_list_ge():
     device_dict = {'label': '', 'name': '', 'id': ''}
     device_list = []
     nb = pynetbox.api(
-        'https://netbox.onairent.live',
+        'netbox_url',
         token= os.getenv('NETBOX_TOKEN')
     )
     # Define tags and netbox filter properties
@@ -106,8 +106,8 @@ def get_ppcs_list_ge():
     for device in devices:
         new_device_dict = device_dict.copy()
         new_device_dict['label'] = device.name
-        new_device_dict['name'] = device.name + '.int.onairent.live'
-        new_device_dict['id'] = device.name + '.int.onairent.live'
+        new_device_dict['name'] = device.name + '.address'
+        new_device_dict['id'] = device.name + '.address'
         device_list.append(new_device_dict)
         device_dict.clear()
     print('API Load Time\nElapsed: %.3f seconds' % (time.time() - t))
